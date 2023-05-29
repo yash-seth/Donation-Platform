@@ -86,6 +86,7 @@
         -webkit-animation-delay: 0.20s;
         animation: slide 0.5s forwards;
         animation-delay: 0.20s;
+        z-index: 1;
     }
 }
 
