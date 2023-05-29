@@ -1,9 +1,27 @@
 import './App.css';
+import About from './Components/About/About';
 import Navbar from './Components/Navbar/Navbar';
+import Contact from './Components/Contact/Contact';
+import Donations from './Components/Donations/Donations';
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom';
 
 function App() {
   return (
-    <Navbar />
+    <Router>
+      <Navbar />
+      <Routes>
+        {/* <Route exact path="/" element={}></Route> */}
+        <Route exact path="/about-us" element={<About />}></Route>
+        <Route exact path="/contact-us" element={<Contact />}></Route>
+        <Route exact path="/donations" element={<Donations />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
