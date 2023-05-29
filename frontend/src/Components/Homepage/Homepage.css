@@ -4,4 +4,19 @@
     justify-content: center;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    z-index: 0.9;
+}
+
+.carousel {
+    display: "block";
+    width: 100%;
+    padding: 30;
+}
+
+@media screen and (max-width: 600px) {
+    .carousel {
+        width: 100%;
+        padding: 0px;
+    }    
 }
