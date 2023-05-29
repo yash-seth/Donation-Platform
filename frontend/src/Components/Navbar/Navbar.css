@@ -1,5 +1,15 @@
 .navbar {
     background-color: rgba(166, 212, 166, 0.652);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#company-name {
+    font-size: 24px;
+    margin: 20px;
 }
 
 .nav-controls {
@@ -20,4 +30,70 @@
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.nav-controls-btns:active {
+    color: rgba(128, 128, 128, 0.6);
+}
+
+#hamburger-menu-mobile {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    display: none;
+    margin: 10px;
+}
+
+.navbar-menu-mobile, .navbar-menu-mobile-visible {
+    display: none;
+}
+
+.navbar-menu-mobile-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+@media screen and (max-width: 600px) {
+    #company-name {
+        font-size: 18px;
+        margin: 10px;
+    }
+    #hamburger-menu-mobile {
+        display: block;
+    }
+    .nav-controls {
+        display: none;
+    }
+    .nav-controls-btns {
+        margin: 4px 10px;
+    }
+    .nav-controls-btns:hover {
+        background-color: rgba(128, 128, 128, 0.5);
+    }
+    .navbar-menu-mobile-visible {
+        display: block;
+        height: fit-content;
+        background-color: rgb(158, 236, 119);
+        position: absolute;
+        right: -100px;
+        -webkit-animation: slide 0.5s forwards;
+        -webkit-animation-delay: 0.20s;
+        animation: slide 0.5s forwards;
+        animation-delay: 0.20s;
+    }
+}
+
+/* Transitions */
+@-webkit-keyframes slide {
+    100% { right: 0; }
+}
+
+@keyframes slide {
+    100% { right: 0; }
 }
