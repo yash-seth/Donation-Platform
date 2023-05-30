@@ -9,7 +9,6 @@ function Homepage() {
     <div className="homepage">
       <div className="carousel-container">
         <div className="carousel">
-          {/* <h4>React-Bootstrap Carousel Component</h4> */}
           <Carousel>
             <Carousel.Item interval={3000}>
               <img className="d-block w-100" src={childrenPlaying} alt="One" width={"auto"} height={"100%"}/>
