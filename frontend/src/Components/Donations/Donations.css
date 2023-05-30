@@ -1,0 +1,32 @@
+.donations {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.sidemenu {
+    /* padding-top: 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(129, 172, 99);
+}
+
+.sidemenu-btns {
+    background: none;
+	color: inherit;
+	border: none;
+    border-bottom: 1px black solid;
+	padding: 10px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    width: 100%;
+}
+
+.sidemenu-btns:active {
+    color: rgba(128, 128, 128, 0.7);
+}
