@@ -24,10 +24,10 @@ function Navbar() {
     </div>
     <div className={menuState}>
       <div className='navbar-menu-mobile-list'>
-        <Link to="/" style={{ color: 'black' }}><button className='nav-controls-btns'>Home</button></Link>
-        <Link to="/about-us" style={{ color: 'black' }}><button className='nav-controls-btns'>About Us</button></Link>
-        <Link to="/contact-us" style={{ color: 'black' }}><button className='nav-controls-btns'>Contact Us</button></Link>
-        <Link to="/donations" style={{ color: 'black' }}><button className='nav-controls-btns'>Donate</button></Link>
+        <Link to="/" style={{ color: 'black' }}><button className='nav-controls-btns' onClick={toggleNavbarMenu}>Home</button></Link>
+        <Link to="/about-us" style={{ color: 'black' }}><button className='nav-controls-btns' onClick={toggleNavbarMenu}>About Us</button></Link>
+        <Link to="/contact-us" style={{ color: 'black' }}><button className='nav-controls-btns' onClick={toggleNavbarMenu}>Contact Us</button></Link>
+        <Link to="/donations" style={{ color: 'black' }}><button className='nav-controls-btns' onClick={toggleNavbarMenu}>Donate</button></Link>
       </div>
     </div>
 </>
