@@ -6,10 +6,10 @@ let completedOrders = [
 ]
 
 let transitOrders = [
-    {orderID: 0, status: "transit", name: "Yash Seth", contact: "8108015244", email: "xyz@email.com", initiatedDate: "06/04/2023"},
-    {orderID: 1, status: "transit", name: "abc", contact: "123456", email: "abc@email.com", initiatedDate: "03/02/2023"},
-    {orderID: 2, status: "transit", name: "xyz", contact: "444444", email: "xyz@email.com", initiatedDate: "02/03/2023"},
-    {orderID: 3, status: "transit", name: "pqr", contact: "555555", email: "pqr@email.com", initiatedDate: "12/01/2023"},
+    {orderID: 0, status: "transit", name: "Yash Seth", contact: "8108015244", email: "yashseth2002@gmail.com", initiatedDate: "06/04/2023"},
+    {orderID: 1, status: "transit", name: "abc", contact: "123456", email: "yashseth2002@gmail.com", initiatedDate: "03/02/2023"},
+    {orderID: 2, status: "transit", name: "xyz", contact: "444444", email: "yashseth2002@gmail.com", initiatedDate: "02/03/2023"},
+    {orderID: 3, status: "transit", name: "pqr", contact: "555555", email: "yashseth2002@gmail.com", initiatedDate: "12/01/2023"},
 ]
 
 export { 
