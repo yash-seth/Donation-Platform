@@ -5,4 +5,14 @@ let completedOrders = [
     {orderID: 3, status: "completed", name: "pqr", contact: "555555", email: "pqr@email.com"},
 ]
 
-export { completedOrders }
+let transitOrders = [
+    {orderID: 0, status: "transit", name: "Yash Seth", contact: "8108015244", email: "xyz@email.com"},
+    {orderID: 1, status: "transit", name: "abc", contact: "123456", email: "abc@email.com"},
+    {orderID: 2, status: "transit", name: "xyz", contact: "444444", email: "xyz@email.com"},
+    {orderID: 3, status: "transit", name: "pqr", contact: "555555", email: "pqr@email.com"},
+]
+
+export { 
+    completedOrders,
+    transitOrders,
+}
