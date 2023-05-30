@@ -1,11 +1,11 @@
 import { React, useState } from "react";
 import "./Donations.css";
-import { completedOrders } from "../../Data";
+import { completedOrders, transitOrders } from "../../Data";
 
 function Donations() {
   const [dashboardView, setDashboardView] = useState("completed");
   function sendReminder(e) {
-    console.log(e.orderID)
+    alert("Reminder was sent for order with ID: " + e.target.value)
   }
   return (
     <div className="donations">
@@ -31,6 +31,9 @@ function Donations() {
       </div>
       {dashboardView === "completed" ? (
         <div className="completedOrders">
+          <div className="donations-header">
+            <h1>Completed Orders</h1>
+          </div>
           <table className="styled-table">
             <thead>
               <tr>
@@ -38,7 +41,8 @@ function Donations() {
                 {/* <th>Status</th> */}
                 <th>Name</th>
                 <th>Contact Number</th>
-                <th>Contact Number</th>
+                <th>Email Address</th>
+                <th>Data of Completion</th>
             </tr>
             </thead>
             <tbody>
@@ -49,6 +53,7 @@ function Donations() {
                   {/* <td>{order.status}</td> */}
                   <td>{order.contact}</td>
                   <td>{order.email}</td>
+                  <td>{order.completedDate}</td>
                 </tr>
               )})}
             </tbody>
@@ -80,7 +85,7 @@ function Donations() {
                   <td>{order.contact}</td>
                   <td>{order.email}</td>
                   <td>{order.initiatedDate}</td>
-                  <td><button onClick={(e) => sendReminder(e)}>Remind</button></td>
+                  <td><button value={order.orderID} onClick={(e) => sendReminder(e)}>Remind</button></td>
                 </tr>
               )})}
             </tbody>
