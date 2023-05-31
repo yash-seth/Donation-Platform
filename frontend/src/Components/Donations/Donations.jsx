@@ -31,6 +31,7 @@ function Donations() {
         console.log("There was some error.")
       }
     })
+    setOrderData({name: "", contact: "", email: "", date: "", status: "pending"})
   }
 
   function sendReminder(e) {
@@ -180,7 +181,7 @@ function Donations() {
             <input name="contact" id="contact" onChange={handleFormData} value={orderData.contact}/><br/>
             <label htmlFor="email">Email: </label>
             <input name="email" id="email" onChange={handleFormData} value={orderData.email}/><br/>
-            <button type="submit" onClick={() => setOrderData({name: "", contact: "", email: "", date: "", status: "pending"})}>Submit</button>
+            <button type="submit">Submit</button>
           </form>
         </div>
       ) : (
