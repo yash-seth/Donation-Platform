@@ -8,7 +8,7 @@ function Donations() {
   function sendReminder(e) {
     alert("Reminder was sent for order with ID: " + e.target.value);
     let orderID = e.target.value;
-    const templateId = "template_iphgpdf";
+    const templateId = process.env.REACT_APP_TEMPLATE_ID;
     // Note: currently works because orderID == index for the dummy data, if orderID does not align with index in data array, will not work
     sendFeedback(templateId, {
       message:
@@ -26,7 +26,7 @@ function Donations() {
 
   function sendFeedback(templateId, variables) {
     window.emailjs
-      .send("service_2dvqsuj", templateId, variables)
+      .send(process.env.REACT_APP_SERVICE_ID, templateId, variables)
       .then((res) => {
         console.log("Email successfully sent!");
       })
