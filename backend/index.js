@@ -27,25 +27,13 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
- 
     res.send("App is Working");
-    // You can check backend is working or not by
-    // entering http://localhost:5000
-     
-    // If you see App is working means
-    // backend working properly
 });
  
 app.post("/add-order", async (req, res) => {
     try {
         console.log(req.body)
-        const order = new Order({
-            name: "abc",
-            contact: "abc",
-            email: "abc",
-            date: "abc",
-            status: "abc"
-        });
+        const order = new Order(req.body);
         let result = await order.save();
         result = result.toObject();
         if (result) {

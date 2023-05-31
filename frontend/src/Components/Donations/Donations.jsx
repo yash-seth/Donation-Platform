@@ -1,10 +1,11 @@
 import { React, useState } from "react";
 import "./Donations.css";
 import { completedOrders, transitOrders } from "../../Data";
+import axios from 'axios'
 
 function Donations() {
   const [dashboardView, setDashboardView] = useState("completed");
-  const [orderData, setOrderData] = useState({})
+  const [orderData, setOrderData] = useState({status: 'pending'})
 
   function handleFormData(e) {
     const key = e.target.name;
@@ -14,12 +15,22 @@ function Donations() {
     setOrderData((orderData) => ({...orderData, ['date']: date}))
   }
 
-  function handleFormSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault();
     // let date = new Date().toLocaleDateString();
     // setOrderData((orderData) => ({...orderData, ['date']: date}))
-    alert("Form was submitted!")
+    alert("Form was submitted and order was added.")
     console.log(orderData)
+
+    await axios.post("http://localhost:5000/add-order", {
+      ...orderData
+    }).then((res) => {
+      try{
+        console.log(res.data.msg)
+      } catch(err) {
+        console.log("There was some error.")
+      }
+    })
   }
 
   function sendReminder(e) {
