@@ -1,27 +1,16 @@
 // To connect with your mongoDB database
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-
-dotenv.config()
-
-mongoose.connect('mongodb://127.0.0.1:27017/' + process.env.DB_NAME)
- 
-// Schema for users of app
-const orderSchema = new mongoose.Schema({
-    name: String,
-    contact: String,
-    email: String,
-    date: String,
-    status: String
-});
-
-// creating the model - think of it as a class
-const Order = mongoose.model('orders', orderSchema);
- 
-// For backend and express
+const Order = require("./Models/orders")
 const express = require('express');
 const app = express();
 const cors = require("cors");
+
+// environment variables set up
+dotenv.config()
+
+// db connection
+mongoose.connect(process.env.DB_CONNECTION_STRING + process.env.DB_NAME)
 
 app.use(express.json());
 app.use(cors());
@@ -30,6 +19,7 @@ app.get("/", (req, res) => {
     res.send("App is Working");
 });
  
+// adds new orders
 app.post("/add-order", async (req, res) => {
     try {
         console.log(req.body)
@@ -47,6 +37,6 @@ app.post("/add-order", async (req, res) => {
     }
 });
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is running at port 5000")
 });
