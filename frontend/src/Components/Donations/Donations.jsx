@@ -175,12 +175,12 @@ function Donations() {
           </div>
           <form onSubmit={handleFormSubmit} id="order_form">
             <label htmlFor="name">Name: </label>
-            <input name="name" id="name" onChange={handleFormData}/><br/>
+            <input name="name" id="name" onChange={handleFormData} value={orderData.name}/><br/>
             <label htmlFor="contact">Contact Number: </label>
-            <input name="contact" id="contact" onChange={handleFormData}/><br/>
+            <input name="contact" id="contact" onChange={handleFormData} value={orderData.contact}/><br/>
             <label htmlFor="email">Email: </label>
-            <input name="email" id="email" onChange={handleFormData}/><br/>
-            <button type="submit">Submit</button>
+            <input name="email" id="email" onChange={handleFormData} value={orderData.email}/><br/>
+            <button type="submit" onClick={() => setOrderData({name: "", contact: "", email: "", date: "", status: "pending"})}>Submit</button>
           </form>
         </div>
       ) : (
