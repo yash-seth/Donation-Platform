@@ -38,6 +38,10 @@ function Donations() {
       );
   }
 
+  function markCompleted(e) {
+    alert("Order was completed")
+  }
+  
   return (
     <div className="donations">
       <div className="sidemenu">
@@ -125,6 +129,11 @@ function Donations() {
                         onClick={(e) => sendReminder(e)}
                       >
                         Remind
+                      </button>
+                      <button
+                        onClick={(e) => markCompleted(e)}
+                      >
+                        Complete
                       </button>
                     </td>
                   </tr>
