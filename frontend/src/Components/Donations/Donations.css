@@ -86,3 +86,10 @@
     font-weight: bold;
     color: #009879;
 }
+
+#order_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

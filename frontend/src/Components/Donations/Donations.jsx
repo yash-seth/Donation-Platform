@@ -4,6 +4,23 @@ import { completedOrders, transitOrders } from "../../Data";
 
 function Donations() {
   const [dashboardView, setDashboardView] = useState("completed");
+  const [orderData, setOrderData] = useState({})
+
+  function handleFormData(e) {
+    const key = e.target.name;
+    const val = e.target.value;
+    setOrderData((orderData) => ({...orderData, [key]:val}))
+    let date = new Date().toLocaleDateString();
+    setOrderData((orderData) => ({...orderData, ['date']: date}))
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    // let date = new Date().toLocaleDateString();
+    // setOrderData((orderData) => ({...orderData, ['date']: date}))
+    alert("Form was submitted!")
+    console.log(orderData)
+  }
 
   function sendReminder(e) {
     alert("Reminder was sent for order with ID: " + e.target.value);
@@ -39,9 +56,9 @@ function Donations() {
   }
 
   function markCompleted(e) {
-    alert("Order was completed")
+    alert("Order was completed");
   }
-  
+
   return (
     <div className="donations">
       <div className="sidemenu">
@@ -130,9 +147,7 @@ function Donations() {
                       >
                         Remind
                       </button>
-                      <button
-                        onClick={(e) => markCompleted(e)}
-                      >
+                      <button onClick={(e) => markCompleted(e)}>
                         Complete
                       </button>
                     </td>
@@ -143,9 +158,52 @@ function Donations() {
           </table>
         </div>
       ) : dashboardView === "new" ? (
-        <div>New Order</div>
+        <div className="completedOrders">
+          <div className="donations-header">
+            <h1>New Order</h1>
+          </div>
+          <form onSubmit={handleFormSubmit} id="order_form">
+            <label htmlFor="name">Name: </label>
+            <input name="name" id="name" onChange={handleFormData}/><br/>
+            <label htmlFor="contact">Contact Number: </label>
+            <input name="contact" id="contact" onChange={handleFormData}/><br/>
+            <label htmlFor="email">Email: </label>
+            <input name="email" id="email" onChange={handleFormData}/><br/>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       ) : (
-        <div>Completed Orders</div>
+        <div className="completedOrders">
+          <div className="donations-header">
+            <h1>Completed Orders</h1>
+          </div>
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                {/* <th>Status</th> */}
+                <th>Name</th>
+                <th>Contact Number</th>
+                <th>Email Address</th>
+                <th>Data of Completion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {completedOrders.map((order) => {
+                return (
+                  <tr id={order.orderID} key={order.orderID}>
+                    <td>{order.orderID}</td>
+                    <td>{order.name}</td>
+                    {/* <td>{order.status}</td> */}
+                    <td>{order.contact}</td>
+                    <td>{order.email}</td>
+                    <td>{order.completedDate}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
