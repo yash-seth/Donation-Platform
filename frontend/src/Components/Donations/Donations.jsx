@@ -21,6 +21,11 @@ function Donations() {
       .then((orders) => setCompletedOrders(orders.data));
   };
 
+
+  const sync = async () => {
+    fetchPendingRecords()
+    fetchCompletedRecords()
+  }
   // fetch records on first render
   useEffect(() => {
     fetchPendingRecords();
@@ -128,7 +133,7 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Completed Orders</h1>
-            <button onClick={fetchCompletedRecords}>Sync Changes</button>
+            <button onClick={sync}>Sync Changes</button>
           </div>
           {completedOrders.length !== 0 ? (
             <>
@@ -170,7 +175,7 @@ function Donations() {
           <div className="donations-header">
             <div id="transitHeaders">
               <h1>Transit Orders</h1>
-              <button onClick={fetchPendingRecords}>Sync Changes</button>
+              <button onClick={sync}>Sync Changes</button>
             </div>
           </div>
           {pendingOrders.length !== 0 ? (
