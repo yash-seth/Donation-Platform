@@ -42,11 +42,7 @@ function Donations() {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    // let date = new Date().toLocaleDateString();
-    // setOrderData((orderData) => ({...orderData, ['date']: date}))
     alert("Form was submitted and order was added.");
-    // console.log(orderData);
-
     await axios
       .post("http://localhost:5000/add-order", {
         ...orderData,
@@ -58,6 +54,7 @@ function Donations() {
           console.log("There was some error.");
         }
       });
+
     setOrderData({
       name: "",
       contact: "",
@@ -72,7 +69,6 @@ function Donations() {
     let orderID = e.target.value;
     console.log(pendingOrders[orderID]);
     const templateId = process.env.REACT_APP_TEMPLATE_ID;
-    // Note: currently works because orderID == index for the dummy data, if orderID does not align with index in data array, will not work
     sendFeedback(templateId, {
       message:
         "This is a reminder to send your courier for donation. Kindly do so at the earliest. Thanks!",
@@ -265,36 +261,42 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Completed Orders</h1>
-            <button onClick={fetchCompletedRecords}>Sync Changes</button>
+            <button onClick={sync}>Sync Changes</button>
           </div>
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Order ID</th>
-                {/* <th>Status</th> */}
-                <th>Name</th>
-                <th>Contact Number</th>
-                <th>Email Address</th>
-                <th>Data of Completion</th>
-              </tr>
-            </thead>
-            <tbody>
-              {completedOrders.map((order, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{order._id}</td>
-                    <td>{order.name}</td>
-                    {/* <td>{order.status}</td> */}
-                    <td>{order.contact}</td>
-                    <td>{order.email}</td>
-                    <td>{order.completedDate}</td>
+          {completedOrders.length !== 0 ? (
+            <>
+              <table className="styled-table">
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Order ID</th>
+                    {/* <th>Status</th> */}
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Data of Completion</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {completedOrders.map((order, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{order._id}</td>
+                        <td>{order.name}</td>
+                        {/* <td>{order.status}</td> */}
+                        <td>{order.contact}</td>
+                        <td>{order.email}</td>
+                        <td>{order.completedDate}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div>No Completed Orders</div>
+          )}
         </div>
       )}
     </div>
