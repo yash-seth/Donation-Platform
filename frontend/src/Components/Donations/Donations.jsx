@@ -147,8 +147,10 @@ function Donations() {
       ) : dashboardView === "transit" ? (
         <div className="completedOrders">
           <div className="donations-header">
-            <h1>Transit Orders</h1>
-            <button onClick={fetchPendingRecords}>Fetch Pending Orders</button>
+            <div id="transitHeaders">
+              <h1>Transit Orders</h1>
+              <button onClick={fetchPendingRecords}>Sync Changes</button>
+            </div>
           </div>
           <table className="styled-table">
             <thead>
