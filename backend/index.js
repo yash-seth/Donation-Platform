@@ -56,6 +56,16 @@ app.post("/complete-order", async (req, res) => {
     }
 })
 
+app.get("/get-completed-orders", async (req, res) => {
+    try {
+        const response = await Order.find({ status: 'completed' });
+        // console.log(response)
+        res.send(response)
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 app.listen(process.env.PORT, () => {
     console.log("Server is running at port 5000")
 });

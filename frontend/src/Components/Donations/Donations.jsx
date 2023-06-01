@@ -7,6 +7,7 @@ function Donations() {
   const [dashboardView, setDashboardView] = useState("completed");
   const [orderData, setOrderData] = useState({ status: "pending" });
   const [pendingOrders, setPendingOrders] = useState([]);
+  const [completedOrders, setCompletedOrders] = useState([]);
 
   const fetchPendingRecords = async () => {
     await axios
@@ -14,9 +15,16 @@ function Donations() {
       .then((orders) => setPendingOrders(orders.data))
   };
 
+  const fetchCompletedRecords = async () => {
+    await axios
+      .get("http://localhost:5000/get-completed-orders")
+      .then((orders) => setCompletedOrders(orders.data))
+  };
+
   // fetch records on first render
   useEffect(() => {
     fetchPendingRecords()
+    fetchCompletedRecords()
   },[])
 
   function handleFormData(e) {
@@ -116,10 +124,12 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Completed Orders</h1>
+            <button onClick={fetchCompletedRecords}>Sync Changes</button>
           </div>
           <table className="styled-table">
             <thead>
               <tr>
+                <th>Index</th>
                 <th>Order ID</th>
                 {/* <th>Status</th> */}
                 <th>Name</th>
@@ -129,10 +139,11 @@ function Donations() {
               </tr>
             </thead>
             <tbody>
-              {completedOrders.map((order) => {
+              {completedOrders.map((order, index) => {
                 return (
-                  <tr key={order.orderID}>
-                    <td>{order.orderID}</td>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{order._id}</td>
                     <td>{order.name}</td>
                     {/* <td>{order.status}</td> */}
                     <td>{order.contact}</td>
