@@ -38,7 +38,7 @@ app.post("/add-order", async (req, res) => {
 app.get("/get-pending-orders", async (req, res) => {
     try {
         const response = await Order.find({ status: 'pending' });
-        console.log(response)
+        // console.log(response)
         res.send(response)
     } catch(err) {
         console.log(err)

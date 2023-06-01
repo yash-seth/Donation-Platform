@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./Donations.css";
-import { completedOrders, transitOrders } from "../../Data";
+import { completedOrders } from "../../Data";
 import axios from "axios";
 
 function Donations() {
@@ -11,7 +11,7 @@ function Donations() {
   const fetchPendingRecords = async () => {
     await axios
       .get("http://localhost:5000/get-pending-orders")
-      .then((orders) => setPendingOrders(orders))
+      .then((orders) => setPendingOrders(orders.data))
   };
 
   useEffect(() => {
@@ -56,19 +56,20 @@ function Donations() {
   function sendReminder(e) {
     alert("Reminder was sent for order with ID: " + e.target.value);
     let orderID = e.target.value;
+    console.log(pendingOrders[orderID])
     const templateId = process.env.REACT_APP_TEMPLATE_ID;
     // Note: currently works because orderID == index for the dummy data, if orderID does not align with index in data array, will not work
     sendFeedback(templateId, {
       message:
         "This is a reminder to send your courier for donation. Kindly do so at the earliest. Thanks!",
-      reply_to: transitOrders[orderID].email,
-      to_name: transitOrders[orderID].name,
+      reply_to: pendingOrders[orderID].email,
+      to_name: pendingOrders[orderID].name,
     });
   }
 
   function sendFeedback(templateId, variables) {
     window.emailjs
-      .send(process.env.REACT_APP_SERVICE_ID, templateId, variables)
+      .send(process.env.REACT_APP_SERVICE_ID, templateId, variables, process.env.REACT_APP_PUBLIC_KEY)
       .then((res) => {
         console.log("Email successfully sent!");
       })
@@ -81,7 +82,7 @@ function Donations() {
   }
 
   function markCompleted(e) {
-    alert("Order was completed");
+    alert("Order " + e.target.value + " was completed");
   }
 
   return (
@@ -125,7 +126,7 @@ function Donations() {
             <tbody>
               {completedOrders.map((order) => {
                 return (
-                  <tr id={order.orderID} key={order.orderID}>
+                  <tr key={order.orderID}>
                     <td>{order.orderID}</td>
                     <td>{order.name}</td>
                     {/* <td>{order.status}</td> */}
@@ -147,6 +148,7 @@ function Donations() {
           <table className="styled-table">
             <thead>
               <tr>
+                <th>Index</th>
                 <th>Order ID</th>
                 {/* <th>Status</th> */}
                 <th>Name</th>
@@ -157,10 +159,11 @@ function Donations() {
               </tr>
             </thead>
             <tbody>
-              {pendingOrders.data.map((order) => {
+              {pendingOrders.map((order, index) => {
                 return (
-                  <tr id={order.orderID} key={order.orderID}>
-                    <td>{order.orderID}</td>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{order._id}</td>
                     <td>{order.name}</td>
                     {/* <td>{order.status}</td> */}
                     <td>{order.contact}</td>
@@ -168,12 +171,12 @@ function Donations() {
                     <td>{order.date}</td>
                     <td>
                       <button
-                        value={order.orderID}
+                        value={index}
                         onClick={(e) => sendReminder(e)}
                       >
                         Remind
                       </button>
-                      <button onClick={(e) => markCompleted(e)}>
+                      <button value = {index} onClick={(e) => markCompleted(e)}>
                         Complete
                       </button>
                     </td>
@@ -235,7 +238,7 @@ function Donations() {
             <tbody>
               {completedOrders.map((order) => {
                 return (
-                  <tr id={order.orderID} key={order.orderID}>
+                  <tr key={order.orderID}>
                     <td>{order.orderID}</td>
                     <td>{order.name}</td>
                     {/* <td>{order.status}</td> */}
