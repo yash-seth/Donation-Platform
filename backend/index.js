@@ -22,13 +22,11 @@ app.get("/", (req, res) => {
 // adds new orders
 app.post("/add-order", async (req, res) => {
     try {
-        console.log(req.body)
         const order = new Order(req.body);
         let result = await order.save();
         result = result.toObject();
         if (result) {
             res.send({msg: "Order added successfully!"});
-            console.log(result);
         } else {
             res.send({msg: "There was an error trying to add the order, please try again."})
         }
@@ -36,6 +34,16 @@ app.post("/add-order", async (req, res) => {
         res.send("Something Went Wrong. Please try again. " + e);
     }
 });
+
+app.get("/get-pending-orders", async (req, res) => {
+    try {
+        const response = await Order.find({ status: 'pending' });
+        console.log(response)
+        res.send(response)
+    } catch(err) {
+        console.log(err)
+    }
+})
 
 app.listen(process.env.PORT, () => {
     console.log("Server is running at port 5000")

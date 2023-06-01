@@ -1,37 +1,56 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./Donations.css";
 import { completedOrders, transitOrders } from "../../Data";
-import axios from 'axios'
+import axios from "axios";
 
 function Donations() {
   const [dashboardView, setDashboardView] = useState("completed");
-  const [orderData, setOrderData] = useState({status: 'pending'})
+  const [orderData, setOrderData] = useState({ status: "pending" });
+  const [pendingOrders, setPendingOrders] = useState([]);
+
+  const fetchPendingRecords = async () => {
+    await axios
+      .get("http://localhost:5000/get-pending-orders")
+      .then((orders) => setPendingOrders(orders))
+  };
+
+  useEffect(() => {
+    fetchPendingRecords()
+  },[])
 
   function handleFormData(e) {
     const key = e.target.name;
     const val = e.target.value;
-    setOrderData((orderData) => ({...orderData, [key]:val}))
+    setOrderData((orderData) => ({ ...orderData, [key]: val }));
     let date = new Date().toLocaleDateString();
-    setOrderData((orderData) => ({...orderData, ['date']: date}))
+    setOrderData((orderData) => ({ ...orderData, ["date"]: date }));
   }
 
   async function handleFormSubmit(e) {
     e.preventDefault();
     // let date = new Date().toLocaleDateString();
     // setOrderData((orderData) => ({...orderData, ['date']: date}))
-    alert("Form was submitted and order was added.")
-    console.log(orderData)
+    alert("Form was submitted and order was added.");
+    // console.log(orderData);
 
-    await axios.post("http://localhost:5000/add-order", {
-      ...orderData
-    }).then((res) => {
-      try{
-        console.log(res.data.msg)
-      } catch(err) {
-        console.log("There was some error.")
-      }
-    })
-    setOrderData({name: "", contact: "", email: "", date: "", status: "pending"})
+    await axios
+      .post("http://localhost:5000/add-order", {
+        ...orderData,
+      })
+      .then((res) => {
+        try {
+          console.log(res.data.msg);
+        } catch (err) {
+          console.log("There was some error.");
+        }
+      });
+    setOrderData({
+      name: "",
+      contact: "",
+      email: "",
+      date: "",
+      status: "pending",
+    });
   }
 
   function sendReminder(e) {
@@ -46,12 +65,6 @@ function Donations() {
       to_name: transitOrders[orderID].name,
     });
   }
-
-  // function handleSubmit (event, orderID) {
-  //   const templateId = 'template_iphgpdf';
-  //   console.log(orderID)
-  //   sendFeedback(templateId, {message: "This is a reminder to send your courier for donation. Kindly do so at the earliest. Thanks!", reply_to: transitOrders[orderID].email, to_name: transitOrders[orderID].name})
-  //   }
 
   function sendFeedback(templateId, variables) {
     window.emailjs
@@ -129,6 +142,7 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Transit Orders</h1>
+            <button onClick={fetchPendingRecords}>Fetch Pending Orders</button>
           </div>
           <table className="styled-table">
             <thead>
@@ -143,7 +157,7 @@ function Donations() {
               </tr>
             </thead>
             <tbody>
-              {transitOrders.map((order) => {
+              {pendingOrders.data.map((order) => {
                 return (
                   <tr id={order.orderID} key={order.orderID}>
                     <td>{order.orderID}</td>
@@ -151,7 +165,7 @@ function Donations() {
                     {/* <td>{order.status}</td> */}
                     <td>{order.contact}</td>
                     <td>{order.email}</td>
-                    <td>{order.initiatedDate}</td>
+                    <td>{order.date}</td>
                     <td>
                       <button
                         value={order.orderID}
@@ -176,11 +190,29 @@ function Donations() {
           </div>
           <form onSubmit={handleFormSubmit} id="order_form">
             <label htmlFor="name">Name: </label>
-            <input name="name" id="name" onChange={handleFormData} value={orderData.name}/><br/>
+            <input
+              name="name"
+              id="name"
+              onChange={handleFormData}
+              value={orderData.name}
+            />
+            <br />
             <label htmlFor="contact">Contact Number: </label>
-            <input name="contact" id="contact" onChange={handleFormData} value={orderData.contact}/><br/>
+            <input
+              name="contact"
+              id="contact"
+              onChange={handleFormData}
+              value={orderData.contact}
+            />
+            <br />
             <label htmlFor="email">Email: </label>
-            <input name="email" id="email" onChange={handleFormData} value={orderData.email}/><br/>
+            <input
+              name="email"
+              id="email"
+              onChange={handleFormData}
+              value={orderData.email}
+            />
+            <br />
             <button type="submit">Submit</button>
           </form>
         </div>
