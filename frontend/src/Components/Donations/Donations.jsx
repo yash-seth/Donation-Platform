@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import "./Donations.css";
-import { completedOrders } from "../../Data";
 import axios from "axios";
 
 function Donations() {
@@ -12,24 +11,26 @@ function Donations() {
   const fetchPendingRecords = async () => {
     await axios
       .get("http://localhost:5000/get-pending-orders")
-      .then((orders) => setPendingOrders(orders.data));
+      .then((orders) => setPendingOrders(orders.data))
+      .catch((e) => alert("Server is offline. Please try again later!"));
   };
 
   const fetchCompletedRecords = async () => {
     await axios
       .get("http://localhost:5000/get-completed-orders")
-      .then((orders) => setCompletedOrders(orders.data));
+      .then((orders) => setCompletedOrders(orders.data))
+      .catch((e) => alert("Server is offline. Please try again later!"));
   };
 
-
+  // to sync records across all dashboards
   const sync = async () => {
     fetchPendingRecords()
     fetchCompletedRecords()
   }
+
   // fetch records on first render
   useEffect(() => {
-    fetchPendingRecords();
-    fetchCompletedRecords();
+    sync()
   }, []);
 
   function handleFormData(e) {
@@ -41,7 +42,9 @@ function Donations() {
   }
 
   async function handleFormSubmit(e) {
+    // to prevent refresh after form submit
     e.preventDefault();
+
     alert("Form was submitted and order was added.");
     await axios
       .post("http://localhost:5000/add-order", {
@@ -53,7 +56,8 @@ function Donations() {
         } catch (err) {
           console.log("There was some error.");
         }
-      });
+      })
+      .catch((e) => alert("Server is offline. Please try again later!"));
 
     setOrderData({
       name: "",
@@ -64,12 +68,14 @@ function Donations() {
     });
   }
 
+  // reminder email code
+
   function sendReminder(e) {
-    alert("Reminder was sent for order with ID: " + e.target.value);
+    alert("Reminder was sent for order with Index: " + (parseInt(e.target.value) + parseInt(1)));
     let orderID = e.target.value;
     console.log(pendingOrders[orderID]);
     const templateId = process.env.REACT_APP_TEMPLATE_ID;
-    sendFeedback(templateId, {
+    sendEmail(templateId, {
       message:
         "This is a reminder to send your courier for donation. Kindly do so at the earliest. Thanks!",
       reply_to: pendingOrders[orderID].email,
@@ -77,7 +83,7 @@ function Donations() {
     });
   }
 
-  function sendFeedback(templateId, variables) {
+  function sendEmail(templateId, variables) {
     window.emailjs
       .send(
         process.env.REACT_APP_SERVICE_ID,
@@ -96,11 +102,14 @@ function Donations() {
       );
   }
 
+  // change status of order to completed
+
   async function markCompleted(e) {
     alert("Order " + e.target.value + " was completed");
     await axios.post("http://127.0.0.1:5000/complete-order", {
       orderID: e.target.value,
-    });
+    })
+    .catch((e) => alert("Server is offline. Please try again later!"));
   }
 
   return (
