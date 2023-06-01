@@ -45,6 +45,17 @@ app.get("/get-pending-orders", async (req, res) => {
     }
 })
 
+app.post("/complete-order", async (req, res) => {
+    try {
+        console.log(req.body.orderID)
+        await Order.updateOne(
+            {"_id" : req.body.orderID},
+            {$set: { "status" : "completed"}});
+    } catch(e) {
+        console.log(e)
+    }
+})
+
 app.listen(process.env.PORT, () => {
     console.log("Server is running at port 5000")
 });
