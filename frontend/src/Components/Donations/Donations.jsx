@@ -12,20 +12,20 @@ function Donations() {
   const fetchPendingRecords = async () => {
     await axios
       .get("http://localhost:5000/get-pending-orders")
-      .then((orders) => setPendingOrders(orders.data))
+      .then((orders) => setPendingOrders(orders.data));
   };
 
   const fetchCompletedRecords = async () => {
     await axios
       .get("http://localhost:5000/get-completed-orders")
-      .then((orders) => setCompletedOrders(orders.data))
+      .then((orders) => setCompletedOrders(orders.data));
   };
 
   // fetch records on first render
   useEffect(() => {
-    fetchPendingRecords()
-    fetchCompletedRecords()
-  },[])
+    fetchPendingRecords();
+    fetchCompletedRecords();
+  }, []);
 
   function handleFormData(e) {
     const key = e.target.name;
@@ -65,7 +65,7 @@ function Donations() {
   function sendReminder(e) {
     alert("Reminder was sent for order with ID: " + e.target.value);
     let orderID = e.target.value;
-    console.log(pendingOrders[orderID])
+    console.log(pendingOrders[orderID]);
     const templateId = process.env.REACT_APP_TEMPLATE_ID;
     // Note: currently works because orderID == index for the dummy data, if orderID does not align with index in data array, will not work
     sendFeedback(templateId, {
@@ -78,7 +78,12 @@ function Donations() {
 
   function sendFeedback(templateId, variables) {
     window.emailjs
-      .send(process.env.REACT_APP_SERVICE_ID, templateId, variables, process.env.REACT_APP_PUBLIC_KEY)
+      .send(
+        process.env.REACT_APP_SERVICE_ID,
+        templateId,
+        variables,
+        process.env.REACT_APP_PUBLIC_KEY
+      )
       .then((res) => {
         console.log("Email successfully sent!");
       })
@@ -92,10 +97,9 @@ function Donations() {
 
   async function markCompleted(e) {
     alert("Order " + e.target.value + " was completed");
-    await axios
-    .post("http://127.0.0.1:5000/complete-order", {
-      orderID: e.target.value
-    })
+    await axios.post("http://127.0.0.1:5000/complete-order", {
+      orderID: e.target.value,
+    });
   }
 
   return (
@@ -126,34 +130,40 @@ function Donations() {
             <h1>Completed Orders</h1>
             <button onClick={fetchCompletedRecords}>Sync Changes</button>
           </div>
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Order ID</th>
-                {/* <th>Status</th> */}
-                <th>Name</th>
-                <th>Contact Number</th>
-                <th>Email Address</th>
-                <th>Data of Completion</th>
-              </tr>
-            </thead>
-            <tbody>
-              {completedOrders.map((order, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{order._id}</td>
-                    <td>{order.name}</td>
-                    {/* <td>{order.status}</td> */}
-                    <td>{order.contact}</td>
-                    <td>{order.email}</td>
-                    <td>{order.completedDate}</td>
+          {completedOrders.length !== 0 ? (
+            <>
+              <table className="styled-table">
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Order ID</th>
+                    {/* <th>Status</th> */}
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Data of Completion</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {completedOrders.map((order, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{order._id}</td>
+                        <td>{order.name}</td>
+                        {/* <td>{order.status}</td> */}
+                        <td>{order.contact}</td>
+                        <td>{order.email}</td>
+                        <td>{order.completedDate}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div>No Completed Orders</div>
+          )}
         </div>
       ) : dashboardView === "transit" ? (
         <div className="completedOrders">
@@ -163,46 +173,55 @@ function Donations() {
               <button onClick={fetchPendingRecords}>Sync Changes</button>
             </div>
           </div>
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Order ID</th>
-                {/* <th>Status</th> */}
-                <th>Name</th>
-                <th>Contact Number</th>
-                <th>Email Address</th>
-                <th>Initiated Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pendingOrders.map((order, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{order._id}</td>
-                    <td>{order.name}</td>
-                    {/* <td>{order.status}</td> */}
-                    <td>{order.contact}</td>
-                    <td>{order.email}</td>
-                    <td>{order.date}</td>
-                    <td>
-                      <button
-                        value={index}
-                        onClick={(e) => sendReminder(e)}
-                      >
-                        Remind
-                      </button>
-                      <button value = {order._id} onClick={(e) => markCompleted(e)}>
-                        Complete
-                      </button>
-                    </td>
+          {pendingOrders.length !== 0 ? (
+            <>
+              <table className="styled-table">
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Order ID</th>
+                    {/* <th>Status</th> */}
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Initiated Date</th>
+                    <th>Action</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {pendingOrders.map((order, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{order._id}</td>
+                        <td>{order.name}</td>
+                        {/* <td>{order.status}</td> */}
+                        <td>{order.contact}</td>
+                        <td>{order.email}</td>
+                        <td>{order.date}</td>
+                        <td>
+                          <button
+                            value={index}
+                            onClick={(e) => sendReminder(e)}
+                          >
+                            Remind
+                          </button>
+                          <button
+                            value={order._id}
+                            onClick={(e) => markCompleted(e)}
+                          >
+                            Complete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div>No pending orders</div>
+          )}
         </div>
       ) : dashboardView === "new" ? (
         <div className="completedOrders">
@@ -241,10 +260,12 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Completed Orders</h1>
+            <button onClick={fetchCompletedRecords}>Sync Changes</button>
           </div>
           <table className="styled-table">
             <thead>
               <tr>
+                <th>Index</th>
                 <th>Order ID</th>
                 {/* <th>Status</th> */}
                 <th>Name</th>
@@ -254,10 +275,11 @@ function Donations() {
               </tr>
             </thead>
             <tbody>
-              {completedOrders.map((order) => {
+              {completedOrders.map((order, index) => {
                 return (
-                  <tr key={order.orderID}>
-                    <td>{order.orderID}</td>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{order._id}</td>
                     <td>{order.name}</td>
                     {/* <td>{order.status}</td> */}
                     <td>{order.contact}</td>
