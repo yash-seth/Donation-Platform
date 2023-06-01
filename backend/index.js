@@ -38,7 +38,6 @@ app.post("/add-order", async (req, res) => {
 app.get("/get-pending-orders", async (req, res) => {
     try {
         const response = await Order.find({ status: 'pending' });
-        // console.log(response)
         res.send(response)
     } catch(err) {
         console.log(err)
@@ -47,7 +46,6 @@ app.get("/get-pending-orders", async (req, res) => {
 
 app.post("/complete-order", async (req, res) => {
     try {
-        console.log(req.body.orderID)
         await Order.updateOne(
             {"_id" : req.body.orderID},
             {$set: { "status" : "completed"}});
@@ -59,7 +57,6 @@ app.post("/complete-order", async (req, res) => {
 app.get("/get-completed-orders", async (req, res) => {
     try {
         const response = await Order.find({ status: 'completed' });
-        // console.log(response)
         res.send(response)
     } catch(err) {
         console.log(err)
