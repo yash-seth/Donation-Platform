@@ -14,6 +14,7 @@ function Donations() {
       .then((orders) => setPendingOrders(orders.data))
   };
 
+  // fetch records on first render
   useEffect(() => {
     fetchPendingRecords()
   },[])
@@ -81,8 +82,12 @@ function Donations() {
       );
   }
 
-  function markCompleted(e) {
+  async function markCompleted(e) {
     alert("Order " + e.target.value + " was completed");
+    await axios
+    .post("http://127.0.0.1:5000/complete-order", {
+      orderID: e.target.value
+    })
   }
 
   return (
@@ -176,7 +181,7 @@ function Donations() {
                       >
                         Remind
                       </button>
-                      <button value = {index} onClick={(e) => markCompleted(e)}>
+                      <button value = {order._id} onClick={(e) => markCompleted(e)}>
                         Complete
                       </button>
                     </td>
