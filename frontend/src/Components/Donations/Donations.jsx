@@ -1,12 +1,14 @@
 import { React, useState, useEffect } from "react";
 import "./Donations.css";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Donations() {
-  const [dashboardView, setDashboardView] = useState("completed");
+  const [dashboardView, setDashboardView] = useState("new");
   const [orderData, setOrderData] = useState({ status: "pending" });
   const [pendingOrders, setPendingOrders] = useState([]);
   const [completedOrders, setCompletedOrders] = useState([]);
+  const { isAuthenticated } = useAuth0();
 
   const fetchPendingRecords = async () => {
     await axios
@@ -120,7 +122,7 @@ function Donations() {
 
   return (
     <div className="donations">
-      <div className="sidemenu">
+      {isAuthenticated && <div className="sidemenu">
         <button
           className="sidemenu-btns"
           onClick={() => setDashboardView("completed")}
@@ -139,7 +141,7 @@ function Donations() {
         >
           New Donation
         </button>
-      </div>
+      </div>}
       {dashboardView === "completed" ? (
         <div className="completedOrders">
           <div className="donations-header">
