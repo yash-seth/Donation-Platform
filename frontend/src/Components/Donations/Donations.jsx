@@ -46,7 +46,7 @@ function Donations() {
   async function handleFormSubmit(e) {
     // to prevent refresh after form submit
     e.preventDefault();
-    
+
     await axios
       .post("http://localhost:5000/add-order", {
         ...orderData,
@@ -60,14 +60,14 @@ function Donations() {
         }
       })
       .catch((e) => alert("Server is offline. Please try again later!"));
-      await sync()
-      setOrderData({
-        name: "",
-        contact: "",
-        email: "",
-        date: "",
-        status: "pending",
-      });
+    await sync();
+    setOrderData({
+      name: "",
+      contact: "",
+      email: "",
+      date: "",
+      status: "pending",
+    });
   }
 
   // reminder email code
@@ -116,32 +116,43 @@ function Donations() {
         orderID: e.target.value,
         completedDate: date,
       })
-      .then( () => {sync(); alert("Order " + e.target.value + " was completed");})
+      .then(() => {
+        sync();
+        alert("Order " + e.target.value + " was completed");
+      })
       .catch((e) => alert("Server is offline. Please try again later!"));
   }
 
   return (
     <div className="donations">
-      {isAuthenticated && <div className="sidemenu">
-        <button
-          className="sidemenu-btns"
-          onClick={() => {setDashboardView("completed"); sync()}}
-        >
-          Completed Donations
-        </button>
-        <button
-          className="sidemenu-btns"
-          onClick={() => {setDashboardView("transit"); sync()}}
-        >
-          In transit
-        </button>
-        <button
-          className="sidemenu-btns"
-          onClick={() => setDashboardView("new")}
-        >
-          New Donation
-        </button>
-      </div>}
+      {isAuthenticated && (
+        <div className="sidemenu">
+          <button
+            className="sidemenu-btns"
+            onClick={() => {
+              setDashboardView("completed");
+              sync();
+            }}
+          >
+            Completed Donations
+          </button>
+          <button
+            className="sidemenu-btns"
+            onClick={() => {
+              setDashboardView("transit");
+              sync();
+            }}
+          >
+            In transit
+          </button>
+          <button
+            className="sidemenu-btns"
+            onClick={() => setDashboardView("new")}
+          >
+            New Donation
+          </button>
+        </div>
+      )}
       {dashboardView === "completed" ? (
         <div className="completedOrders">
           <div className="donations-header">
@@ -168,7 +179,6 @@ function Donations() {
                         <td>{index + 1}</td>
                         <td>{order._id}</td>
                         <td>{order.name}</td>
-                        {/* <td>{order.status}</td> */}
                         <td>{order.contact}</td>
                         <td>{order.email}</td>
                         <td>{order.date}</td>
@@ -197,7 +207,6 @@ function Donations() {
                   <tr>
                     <th>Index</th>
                     <th>Order ID</th>
-                    {/* <th>Status</th> */}
                     <th>Name</th>
                     <th>Contact Number</th>
                     <th>Email Address</th>
@@ -212,7 +221,6 @@ function Donations() {
                         <td>{index + 1}</td>
                         <td>{order._id}</td>
                         <td>{order.name}</td>
-                        {/* <td>{order.status}</td> */}
                         <td>{order.contact}</td>
                         <td>{order.email}</td>
                         <td>{order.date}</td>
@@ -277,7 +285,6 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Completed Orders</h1>
-            <button onClick={sync}>Sync Changes</button>
           </div>
           {completedOrders.length !== 0 ? (
             <>
@@ -286,7 +293,6 @@ function Donations() {
                   <tr>
                     <th>Index</th>
                     <th>Order ID</th>
-                    {/* <th>Status</th> */}
                     <th>Name</th>
                     <th>Contact Number</th>
                     <th>Email Address</th>
@@ -301,7 +307,6 @@ function Donations() {
                         <td>{index + 1}</td>
                         <td>{order._id}</td>
                         <td>{order.name}</td>
-                        {/* <td>{order.status}</td> */}
                         <td>{order.contact}</td>
                         <td>{order.email}</td>
                         <td>{order.date}</td>
