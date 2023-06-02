@@ -46,8 +46,7 @@ function Donations() {
   async function handleFormSubmit(e) {
     // to prevent refresh after form submit
     e.preventDefault();
-
-    alert("Form was submitted and order was added.");
+    
     await axios
       .post("http://localhost:5000/add-order", {
         ...orderData,
@@ -55,19 +54,20 @@ function Donations() {
       .then((res) => {
         try {
           console.log(res.data.msg);
+          alert("Form was submitted and order was added.");
         } catch (err) {
           console.log("There was some error.");
         }
       })
       .catch((e) => alert("Server is offline. Please try again later!"));
       await sync()
-    setOrderData({
-      name: "",
-      contact: "",
-      email: "",
-      date: "",
-      status: "pending",
-    });
+      setOrderData({
+        name: "",
+        contact: "",
+        email: "",
+        date: "",
+        status: "pending",
+      });
   }
 
   // reminder email code
@@ -110,13 +110,13 @@ function Donations() {
   // change status of order to completed
 
   async function markCompleted(e) {
-    alert("Order " + e.target.value + " was completed");
     let date = new Date().toLocaleDateString();
     await axios
       .post("http://127.0.0.1:5000/complete-order", {
         orderID: e.target.value,
         completedDate: date,
       })
+      .then( () => {sync(); alert("Order " + e.target.value + " was completed");})
       .catch((e) => alert("Server is offline. Please try again later!"));
   }
 
@@ -146,7 +146,6 @@ function Donations() {
         <div className="completedOrders">
           <div className="donations-header">
             <h1>Completed Orders</h1>
-            <button onClick={sync}>Sync Changes</button>
           </div>
           {completedOrders.length !== 0 ? (
             <>
@@ -155,7 +154,6 @@ function Donations() {
                   <tr>
                     <th>Index</th>
                     <th>Order ID</th>
-                    {/* <th>Status</th> */}
                     <th>Name</th>
                     <th>Contact Number</th>
                     <th>Email Address</th>
@@ -190,7 +188,6 @@ function Donations() {
           <div className="donations-header">
             <div id="transitHeaders">
               <h1>Transit Orders</h1>
-              <button onClick={sync}>Sync Changes</button>
             </div>
           </div>
           {pendingOrders.length !== 0 ? (
