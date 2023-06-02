@@ -125,13 +125,13 @@ function Donations() {
       {isAuthenticated && <div className="sidemenu">
         <button
           className="sidemenu-btns"
-          onClick={() => setDashboardView("completed")}
+          onClick={() => {setDashboardView("completed"); sync()}}
         >
           Completed Donations
         </button>
         <button
           className="sidemenu-btns"
-          onClick={() => setDashboardView("transit")}
+          onClick={() => {setDashboardView("transit"); sync()}}
         >
           In transit
         </button>
