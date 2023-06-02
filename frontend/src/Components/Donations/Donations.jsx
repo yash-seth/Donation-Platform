@@ -24,13 +24,13 @@ function Donations() {
 
   // to sync records across all dashboards
   const sync = async () => {
-    fetchPendingRecords()
-    fetchCompletedRecords()
-  }
+    fetchPendingRecords();
+    fetchCompletedRecords();
+  };
 
   // fetch records on first render
   useEffect(() => {
-    sync()
+    sync();
   }, []);
 
   function handleFormData(e) {
@@ -71,7 +71,10 @@ function Donations() {
   // reminder email code
 
   function sendReminder(e) {
-    alert("Reminder was sent for order with Index: " + (parseInt(e.target.value) + parseInt(1)));
+    alert(
+      "Reminder was sent for order with Index: " +
+        (parseInt(e.target.value) + parseInt(1))
+    );
     let orderID = e.target.value;
     console.log(pendingOrders[orderID]);
     const templateId = process.env.REACT_APP_TEMPLATE_ID;
@@ -107,11 +110,12 @@ function Donations() {
   async function markCompleted(e) {
     alert("Order " + e.target.value + " was completed");
     let date = new Date().toLocaleDateString();
-    await axios.post("http://127.0.0.1:5000/complete-order", {
-      orderID: e.target.value,
-      completedDate: date
-    })
-    .catch((e) => alert("Server is offline. Please try again later!"));
+    await axios
+      .post("http://127.0.0.1:5000/complete-order", {
+        orderID: e.target.value,
+        completedDate: date,
+      })
+      .catch((e) => alert("Server is offline. Please try again later!"));
   }
 
   return (
@@ -153,7 +157,8 @@ function Donations() {
                     <th>Name</th>
                     <th>Contact Number</th>
                     <th>Email Address</th>
-                    <th>Data of Completion</th>
+                    <th>Date of Initiation</th>
+                    <th>Date of Completion</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -166,6 +171,7 @@ function Donations() {
                         {/* <td>{order.status}</td> */}
                         <td>{order.contact}</td>
                         <td>{order.email}</td>
+                        <td>{order.date}</td>
                         <td>{order.completedDate}</td>
                       </tr>
                     );
@@ -285,7 +291,8 @@ function Donations() {
                     <th>Name</th>
                     <th>Contact Number</th>
                     <th>Email Address</th>
-                    <th>Data of Completion</th>
+                    <th>Date of Initiation</th>
+                    <th>Date of Completion</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -298,6 +305,7 @@ function Donations() {
                         {/* <td>{order.status}</td> */}
                         <td>{order.contact}</td>
                         <td>{order.email}</td>
+                        <td>{order.date}</td>
                         <td>{order.completedDate}</td>
                       </tr>
                     );
