@@ -106,8 +106,10 @@ function Donations() {
 
   async function markCompleted(e) {
     alert("Order " + e.target.value + " was completed");
+    let date = new Date().toLocaleDateString();
     await axios.post("http://127.0.0.1:5000/complete-order", {
       orderID: e.target.value,
+      completedDate: date
     })
     .catch((e) => alert("Server is offline. Please try again later!"));
   }

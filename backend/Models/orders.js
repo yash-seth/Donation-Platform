@@ -5,7 +5,8 @@ const orderSchema = new mongoose.Schema({
     contact: String,
     email: String,
     date: String,
-    status: String
+    status: String,
+    completedDate: String
 });
 
 module.exports = Order = mongoose.model('orders', orderSchema);
