@@ -83,7 +83,7 @@ function Donations() {
     sendEmail(templateId, {
       message:
         "This is a reminder to send your courier for donation. Kindly do so at the earliest. Thanks!",
-      reply_to: pendingOrders[orderID].email,
+      to_email: pendingOrders[orderID].email,
       to_name: pendingOrders[orderID].name,
     });
   }
