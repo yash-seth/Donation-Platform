@@ -49,8 +49,10 @@ app.post("/complete-order", async (req, res) => {
         await Order.updateOne(
             {"_id" : req.body.orderID},
             {$set: { "status" : "completed", "completedDate": req.body.completedDate}});
+        res.status(200).send()
     } catch(e) {
         console.log(e)
+        res.status(500).send(e)
     }
 })
 
