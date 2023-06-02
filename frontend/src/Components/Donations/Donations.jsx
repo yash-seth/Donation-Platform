@@ -60,7 +60,7 @@ function Donations() {
         }
       })
       .catch((e) => alert("Server is offline. Please try again later!"));
-
+      await sync()
     setOrderData({
       name: "",
       contact: "",
