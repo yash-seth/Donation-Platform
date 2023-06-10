@@ -2,3 +2,10 @@
   text-align: center;
   font-family: 'Montserrat', sans-serif;
 }
+
+#content-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
