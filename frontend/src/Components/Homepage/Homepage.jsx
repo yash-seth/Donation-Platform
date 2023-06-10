@@ -14,14 +14,14 @@ function Homepage() {
               <img className="d-block w-100" src={childrenPlaying} alt="One" width={"auto"} height={"100%"}/>
               <Carousel.Caption>
                 <h3 id="photo-header">Football Players</h3>
-                <p id="photo-caption">Bhandup, Mumbai</p>
+                <p id="photo-caption">Foundation Club</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item interval={3000}>
               <img className="d-block w-100" src={childrenPlaying} alt="Two" width={"auto"} height={"100%"}/>
               <Carousel.Caption>
-                <h3 id="photo-header">In rain (in pic)</h3>
-                <p id="photo-caption">Two mulund warriors players</p>
+                <h3 id="photo-header">Football</h3>
+                <p id="photo-caption">Children supported by the foundation</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
