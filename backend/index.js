@@ -9,8 +9,11 @@ const cors = require("cors");
 // environment variables set up
 dotenv.config()
 
-// db connection
-mongoose.connect(process.env.DB_CONNECTION_STRING + process.env.DB_NAME)
+// db connection - for localhost
+// mongoose.connect(process.env.DB_CONNECTION_STRING + process.env.DB_NAME)
+
+// db connection - using cluster
+mongoose.connect(process.env.DB_CONNECTION_STRING)
 
 app.use(express.json());
 app.use(cors());
