@@ -23,7 +23,7 @@ app.get("/api/", (req, res) => {
 });
  
 // adds new orders
-app.post("/add-order", async (req, res) => {
+app.post("/api/add-order", async (req, res) => {
     try {
         const order = new Order(req.body);
         let result = await order.save();
@@ -38,7 +38,7 @@ app.post("/add-order", async (req, res) => {
     }
 });
 
-app.get("/get-pending-orders", async (req, res) => {
+app.get("/api/get-pending-orders", async (req, res) => {
     try {
         const response = await Order.find({ status: 'pending' });
         res.send(response)
@@ -47,7 +47,7 @@ app.get("/get-pending-orders", async (req, res) => {
     }
 })
 
-app.post("/complete-order", async (req, res) => {
+app.post("/api/complete-order", async (req, res) => {
     try {
         await Order.updateOne(
             {"_id" : req.body.orderID},
@@ -59,7 +59,7 @@ app.post("/complete-order", async (req, res) => {
     }
 })
 
-app.get("/get-completed-orders", async (req, res) => {
+app.get("/api/get-completed-orders", async (req, res) => {
     try {
         const response = await Order.find({ status: 'completed' });
         res.send(response)
