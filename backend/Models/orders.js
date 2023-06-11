@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+let Schema = mongoose.Schema;
 const orderSchema = new mongoose.Schema({
     name: String,
     contact: String,
@@ -9,4 +9,6 @@ const orderSchema = new mongoose.Schema({
     completedDate: String
 });
 
-module.exports = Order = mongoose.model('orders', orderSchema);
+let Order = mongoose.model('orders', orderSchema);
+
+export default Order

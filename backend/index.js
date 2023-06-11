@@ -1,10 +1,10 @@
 // To connect with your mongoDB database
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const Order = require("./Models/orders")
-const express = require('express');
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import Order from "./Models/orders.js"
+import express from 'express'
 const app = express();
-const cors = require("cors");
+import cors from "cors"
 
 // environment variables set up
 dotenv.config()
@@ -18,7 +18,7 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
     res.send("App is Working");
 });
  
