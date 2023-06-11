@@ -12,14 +12,14 @@ function Donations() {
 
   const fetchPendingRecords = async () => {
     await axios
-      .get("http://localhost:5000/get-pending-orders")
+      .get("https://donation-platform-backend-git-master-yash-seth.vercel.app/api/get-pending-orders")
       .then((orders) => setPendingOrders(orders.data))
       .catch((e) => alert("Server is offline. Please try again later!"));
   };
 
   const fetchCompletedRecords = async () => {
     await axios
-      .get("http://localhost:5000/get-completed-orders")
+      .get("https://donation-platform-backend-git-master-yash-seth.vercel.app/api/get-completed-orders")
       .then((orders) => setCompletedOrders(orders.data))
       .catch((e) => alert("Server is offline. Please try again later!"));
   };
@@ -48,7 +48,7 @@ function Donations() {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:5000/add-order", {
+      .post("https://donation-platform-backend-git-master-yash-seth.vercel.app/api/add-order", {
         ...orderData,
       })
       .then((res) => {
