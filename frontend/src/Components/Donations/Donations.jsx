@@ -153,6 +153,34 @@ function Donations() {
           </button>
         </div>
       )}
+      {isAuthenticated && (
+        <div className="sidemenu-mobile">
+          <button
+            className="sidemenu-mobile-btns"
+            onClick={() => {
+              setDashboardView("completed");
+              sync();
+            }}
+          >
+            Completed Donations
+          </button>
+          <button
+            className="sidemenu-mobile-btns"
+            onClick={() => {
+              setDashboardView("transit");
+              sync();
+            }}
+          >
+            In transit
+          </button>
+          <button
+            className="sidemenu-mobile-btns"
+            onClick={() => setDashboardView("new")}
+          >
+            New Donation
+          </button>
+        </div>
+      )}
       {dashboardView === "completed" ? (
         <div className="completedOrders">
           <div className="donations-header">
