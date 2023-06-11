@@ -71,3 +71,5 @@ app.get("/get-completed-orders", async (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log("Server is running at port 5000")
 });
+
+export default app;
