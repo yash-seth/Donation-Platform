@@ -125,7 +125,6 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 100vh;
         background-color: rgb(129, 172, 99);
     }
 
@@ -134,10 +133,27 @@
         color: inherit;
         border: none;
         border: 1px black solid;
-        padding: 10px;
+        padding: 4px;
         font: inherit;
         cursor: pointer;
         outline: inherit;
-        width: 100%;
+    }
+
+    .styled-table {
+        margin: 10px 0px;
+        font-size: 0.6em;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 3px 6px;
+    }
+
+    .completedOrders {
+        overflow: scroll;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 }
