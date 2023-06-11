@@ -18,7 +18,7 @@ function Navbar() {
   return (
     <>
     <div className='navbar'>
-        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><div id="company-name">Ratna Nidhi Foundation</div></Link>
+        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><div id="company-name">XYZ Foundation</div></Link>
         <div className='nav-controls'>
             <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><button className='nav-controls-btns'>Home</button></Link>
             <Link to="/about-us" style={{ textDecoration: 'none', color: 'black' }}><button className='nav-controls-btns'>About Us</button></Link>
