@@ -112,7 +112,7 @@ function Donations() {
   async function markCompleted(e) {
     let date = new Date().toLocaleDateString();
     await axios
-      .post("http://127.0.0.1:5000/complete-order", {
+      .post("https://donation-platform-backend-git-master-yash-seth.vercel.app/api/complete-order", {
         orderID: e.target.value,
         completedDate: date,
       })
